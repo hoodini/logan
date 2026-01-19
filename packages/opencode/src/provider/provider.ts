@@ -721,9 +721,23 @@ export namespace Provider {
         return
       }
       const match = database[providerID]
-      if (!match) return
-      // @ts-expect-error
-      providers[providerID] = mergeDeep(match, provider)
+      if (match) {
+        // @ts-expect-error
+        providers[providerID] = mergeDeep(match, provider)
+        return
+      }
+      // For custom providers not in database (like Ollama), create a new entry
+      if (Object.keys(provider.models ?? {}).length > 0 || provider.source === "config") {
+        providers[providerID] = {
+          id: providerID,
+          name: provider.name ?? providerID,
+          source: provider.source ?? "config",
+          env: provider.env ?? [],
+          options: provider.options ?? {},
+          models: provider.models ?? {},
+          ...provider,
+        } as Info
+      }
     }
 
     // extend database from config
@@ -902,6 +916,11 @@ export namespace Provider {
       if (provider.env) partial.env = provider.env
       if (provider.name) partial.name = provider.name
       if (provider.options) partial.options = provider.options
+      // For custom providers (like Ollama), include models from database
+      const dbProvider = database[providerID]
+      if (dbProvider && Object.keys(dbProvider.models).length > 0) {
+        partial.models = dbProvider.models
+      }
       mergeProvider(providerID, partial)
     }
 
