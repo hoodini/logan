@@ -49,6 +49,24 @@ AI coding assistant.
 
 ## Installation
 
+### Quick Install (Recommended)
+
+```bash
+# npm
+npm install -g logan-ai
+
+# bun
+bun add -g logan-ai
+
+# or run directly without installing
+npx logan-ai
+
+# Then just run:
+logan
+```
+
+### From Source (For Development)
+
 ```bash
 # Clone the repository
 git clone https://github.com/hoodini/logan.git

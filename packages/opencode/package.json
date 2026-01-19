@@ -1,11 +1,34 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "version": "1.1.25",
-  "name": "opencode",
-  "description": "Logan is your advanced AI code assistant by Yuval Avidani, YUV.AI",
+  "version": "1.0.0",
+  "name": "logan-ai",
+  "description": "LOGAN - Your Personal AI Coding Agent. Open-source, multi-provider, runs in your terminal. By Yuval Avidani, YUV.AI",
   "type": "module",
   "license": "MIT",
-  "private": true,
+  "private": false,
+  "author": "Yuval Avidani <yuval@yuv.ai> (https://yuv.ai)",
+  "homepage": "https://github.com/hoodini/logan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoodini/logan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hoodini/logan/issues"
+  },
+  "keywords": [
+    "ai",
+    "coding-assistant",
+    "cli",
+    "terminal",
+    "llm",
+    "claude",
+    "openai",
+    "gpt",
+    "copilot",
+    "agent",
+    "code-generation",
+    "developer-tools"
+  ],
   "scripts": {
     "typecheck": "tsgo --noEmit",
     "test": "bun test",

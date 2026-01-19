@@ -7,23 +7,36 @@ import { fileURLToPath } from "url"
 const dir = fileURLToPath(new URL("..", import.meta.url))
 process.chdir(dir)
 
+// Use logan as the binary name
+const binaryName = "logan"
+const packageName = "logan-ai"
+
 const { binaries } = await import("./build.ts")
 {
-  const name = `${pkg.name}-${process.platform}-${process.arch}`
-  console.log(`smoke test: running dist/${name}/bin/opencode --version`)
-  await $`./dist/${name}/bin/opencode --version`
+  const name = `${binaryName}-${process.platform}-${process.arch}`
+  console.log(`smoke test: running dist/${name}/bin/${binaryName} --version`)
+  await $`./dist/${name}/bin/${binaryName} --version`
 }
 
-await $`mkdir -p ./dist/${pkg.name}`
-await $`cp -r ./bin ./dist/${pkg.name}/bin`
-await $`cp ./script/postinstall.mjs ./dist/${pkg.name}/postinstall.mjs`
+await $`mkdir -p ./dist/${packageName}`
+await $`cp -r ./bin ./dist/${packageName}/bin`
+await $`cp ./script/postinstall.mjs ./dist/${packageName}/postinstall.mjs`
 
-await Bun.file(`./dist/${pkg.name}/package.json`).write(
+await Bun.file(`./dist/${packageName}/package.json`).write(
   JSON.stringify(
     {
-      name: pkg.name + "-ai",
+      name: packageName,
+      description: "LOGAN - Your Personal AI Coding Agent. Open-source, multi-provider, runs in your terminal.",
+      author: "Yuval Avidani <yuval@yuv.ai> (https://yuv.ai)",
+      homepage: "https://github.com/hoodini/logan",
+      repository: {
+        type: "git",
+        url: "git+https://github.com/hoodini/logan.git"
+      },
+      license: "MIT",
+      keywords: ["ai", "coding-assistant", "cli", "terminal", "llm", "claude", "openai", "gpt", "copilot", "agent"],
       bin: {
-        [pkg.name]: `./bin/${pkg.name}`,
+        [binaryName]: `./bin/opencode`,
       },
       scripts: {
         postinstall: "bun ./postinstall.mjs || node ./postinstall.mjs",
@@ -49,7 +62,7 @@ const tasks = Object.entries(binaries).map(async ([name]) => {
 })
 await Promise.all(tasks)
 for (const tag of tags) {
-  await $`cd ./dist/${pkg.name} && bun pm pack && npm publish *.tgz --access public --tag ${tag}`
+  await $`cd ./dist/${packageName} && bun pm pack && npm publish *.tgz --access public --tag ${tag}`
 }
 
 if (!Script.preview) {
@@ -62,9 +75,11 @@ if (!Script.preview) {
     }
   }
 
-  const image = "ghcr.io/anomalyco/opencode"
+  // Docker publishing (optional - update image name for your registry)
+  const image = "ghcr.io/hoodini/logan"
   const platforms = "linux/amd64,linux/arm64"
-  const tags = [`${image}:${Script.version}`, `${image}:latest`]
-  const tagFlags = tags.flatMap((t) => ["-t", t])
-  await $`docker buildx build --platform ${platforms} ${tagFlags} --push .`
+  const dockerTags = [`${image}:${Script.version}`, `${image}:latest`]
+  const tagFlags = dockerTags.flatMap((t) => ["-t", t])
+  // Uncomment to enable Docker publishing:
+  // await $`docker buildx build --platform ${platforms} ${tagFlags} --push .`
 }

@@ -8,9 +8,25 @@
 
 ---
 
-## 🏃 Quick Start - איך להריץ את Logan
+## 🏃 Quick Start - איך להתקין ולהריץ את Logan
 
-### אפשרות 1: Development Mode (לפיתוח)
+### אפשרות 1: npm / npx / bun (הכי קל! 🎉)
+
+```bash
+# Install globally with npm
+npm install -g logan-ai
+
+# Or with bun
+bun add -g logan-ai
+
+# Or run directly without installing
+npx logan-ai
+
+# Then just run:
+logan
+```
+
+### אפשרות 2: Development Mode (לפיתוח/תרומה)
 
 ```bash
 # שלב 1: Clone the repo
@@ -24,9 +40,7 @@ bun install
 bun dev
 ```
 
-**זהו! Logan רץ** 🎉
-
-### אפשרות 2: Build Standalone Binary (להפצה)
+### אפשרות 3: Build Standalone Binary
 
 ```bash
 # Build for your current OS
@@ -35,30 +49,16 @@ bun run script/build.ts --single
 
 # Run the built binary
 # Windows:
-.\dist\opencode-windows-x64\bin\opencode.exe
+.\dist\logan-windows-x64\bin\logan.exe
 
 # macOS (Apple Silicon):
-./dist/opencode-darwin-arm64/bin/opencode
+./dist/logan-darwin-arm64/bin/logan
 
 # macOS (Intel):
-./dist/opencode-darwin-x64/bin/opencode
+./dist/logan-darwin-x64/bin/logan
 
 # Linux:
-./dist/opencode-linux-x64/bin/opencode
-```
-
-### אפשרות 3: Run from Any Directory
-
-```bash
-# Add to your PATH (one-time setup)
-# Windows PowerShell:
-$env:Path += ";C:\path\to\logan\packages\opencode\dist\opencode-windows-x64\bin"
-
-# macOS/Linux (add to ~/.bashrc or ~/.zshrc):
-export PATH="$PATH:/path/to/logan/packages/opencode/dist/opencode-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)/bin"
-
-# Now run from anywhere:
-logan
+./dist/logan-linux-x64/bin/logan
 ```
 
 ---
@@ -73,9 +73,9 @@ logan
 cd /path/to/your/project
 
 # 3. Run Logan
-bun dev  # if in logan repo
+logan    # if installed via npm/bun
 # or
-logan    # if installed globally
+bun dev  # if in logan repo for development
 ```
 
 ### JetBrains IDEs (IntelliJ, WebStorm, PyCharm)

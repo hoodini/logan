@@ -9,6 +9,9 @@ import { createRequire } from "module"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const require = createRequire(import.meta.url)
 
+// LOGAN branding
+const binaryName = "logan"
+
 function detectPlatformAndArch() {
   // Map platform names
   let platform
@@ -49,28 +52,28 @@ function detectPlatformAndArch() {
 
 function findBinary() {
   const { platform, arch } = detectPlatformAndArch()
-  const packageName = `opencode-${platform}-${arch}`
-  const binaryName = platform === "windows" ? "opencode.exe" : "opencode"
+  const packageName = `${binaryName}-${platform}-${arch}`
+  const executableName = platform === "windows" ? `${binaryName}.exe` : binaryName
 
   try {
     // Use require.resolve to find the package
     const packageJsonPath = require.resolve(`${packageName}/package.json`)
     const packageDir = path.dirname(packageJsonPath)
-    const binaryPath = path.join(packageDir, "bin", binaryName)
+    const binaryPath = path.join(packageDir, "bin", executableName)
 
     if (!fs.existsSync(binaryPath)) {
       throw new Error(`Binary not found at ${binaryPath}`)
     }
 
-    return { binaryPath, binaryName }
+    return { binaryPath, executableName }
   } catch (error) {
     throw new Error(`Could not find package ${packageName}: ${error.message}`)
   }
 }
 
-function prepareBinDirectory(binaryName) {
+function prepareBinDirectory(executableName) {
   const binDir = path.join(__dirname, "bin")
-  const targetPath = path.join(binDir, binaryName)
+  const targetPath = path.join(binDir, executableName)
 
   // Ensure bin directory exists
   if (!fs.existsSync(binDir)) {
@@ -85,11 +88,11 @@ function prepareBinDirectory(binaryName) {
   return { binDir, targetPath }
 }
 
-function symlinkBinary(sourcePath, binaryName) {
-  const { targetPath } = prepareBinDirectory(binaryName)
+function symlinkBinary(sourcePath, executableName) {
+  const { targetPath } = prepareBinDirectory(executableName)
 
   fs.symlinkSync(sourcePath, targetPath)
-  console.log(`opencode binary symlinked: ${targetPath} -> ${sourcePath}`)
+  console.log(`${binaryName} binary symlinked: ${targetPath} -> ${sourcePath}`)
 
   // Verify the file exists after operation
   if (!fs.existsSync(targetPath)) {
@@ -112,7 +115,7 @@ async function main() {
     console.log(`Platform binary verified at: ${binaryPath}`)
     console.log("Wrapper script will handle binary execution")
   } catch (error) {
-    console.error("Failed to setup opencode binary:", error.message)
+    console.error(`Failed to setup ${binaryName} binary:`, error.message)
     process.exit(1)
   }
 }
