@@ -1,79 +1,82 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://yuv.ai">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Logan AI logo">
     </picture>
   </a>
 </p>
-<p align="center">The open source AI coding agent.</p>
+<p align="center"><strong>Logan AI</strong> — The Personal AI Coding Assistant of Yuval Avidani</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://yuv.ai"><img alt="YUV.AI" src="https://img.shields.io/badge/YUV.AI-Website-blue?style=flat-square" /></a>
+  <a href="https://linktr.ee/yuvai"><img alt="Links" src="https://img.shields.io/badge/Linktree-@yuvai-green?style=flat-square" /></a>
+  <a href="https://x.com/yuvalav"><img alt="X/Twitter" src="https://img.shields.io/badge/X-@yuvalav-black?style=flat-square" /></a>
+  <a href="https://youtube.com/@yuv-ai"><img alt="YouTube" src="https://img.shields.io/badge/YouTube-@yuv--ai-red?style=flat-square" /></a>
+  <a href="https://instagram.com/yuval_770"><img alt="Instagram" src="https://img.shields.io/badge/Instagram-@yuval__770-purple?style=flat-square" /></a>
 </p>
-
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
 
 ---
 
-### Installation
+> **⚠️ NOTICE:** This project is a modified fork of [OpenCode](https://github.com/anomalyco/opencode), 
+> an open-source AI coding agent. Logan AI has been redesigned and rebranded by **Yuval Avidani** 
+> as a personal AI assistant. Full credit to the original OpenCode team for their excellent work.
+
+---
+
+[![Logan AI Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://yuv.ai)
+
+## About Logan AI
+
+**Logan AI** is your personal AI coding assistant, built on the powerful foundation of OpenCode. 
+This project has been customized and enhanced by [Yuval Avidani](https://yuv.ai) to serve as a 
+personalized development companion.
+
+### Who is Yuval Avidani?
+
+Yuval Avidani is a developer and AI enthusiast building tools at the intersection of artificial 
+intelligence and software development. Logan AI represents his vision for a personal, customizable 
+AI coding assistant.
+
+**Connect with Yuval:**
+- 🌐 Website: [yuv.ai](https://yuv.ai)
+- 🔗 All Links: [linktr.ee/yuvai](https://linktr.ee/yuvai)
+- 🐦 X/Twitter: [@yuvalav](https://x.com/yuvalav)
+- 📺 YouTube: [@yuv-ai](https://youtube.com/@yuv-ai)
+- 📸 Instagram: [@yuval_770](https://instagram.com/yuval_770)
+
+---
+
+## Installation
 
 ```bash
-# YOLO
-curl -fsSL https://opencode.ai/install | bash
+# Clone the repository
+git clone https://github.com/hoodini/logan.git
+cd logan
 
-# Package managers
-npm i -g opencode-ai@latest        # or bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS and Linux (recommended, always up to date)
-brew install opencode              # macOS and Linux (official brew formula, updated less)
-paru -S opencode-bin               # Arch Linux
-mise use -g opencode               # Any OS
-nix run nixpkgs#opencode           # or github:anomalyco/opencode for latest dev branch
+# Install dependencies
+bun install
+
+# Run Logan AI
+bun dev
 ```
-
-> [!TIP]
-> Remove versions older than 0.1.x before installing.
 
 ### Desktop App (BETA)
 
-OpenCode is also available as a desktop application. Download directly from the [releases page](https://github.com/anomalyco/opencode/releases) or [opencode.ai/download](https://opencode.ai/download).
+Logan AI is also available as a desktop application.
 
 | Platform              | Download                              |
 | --------------------- | ------------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-darwin-aarch64.dmg` |
-| macOS (Intel)         | `opencode-desktop-darwin-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe`    |
+| macOS (Apple Silicon) | `logan-desktop-darwin-aarch64.dmg`    |
+| macOS (Intel)         | `logan-desktop-darwin-x64.dmg`        |
+| Windows               | `logan-desktop-windows-x64.exe`       |
 | Linux                 | `.deb`, `.rpm`, or AppImage           |
 
-```bash
-# macOS (Homebrew)
-brew install --cask opencode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
-```
+---
 
-#### Installation Directory
+## Agents
 
-The install script respects the following priority order for the installation path:
-
-1. `$OPENCODE_INSTALL_DIR` - Custom installation directory
-2. `$XDG_BIN_DIR` - XDG Base Directory Specification compliant path
-3. `$HOME/bin` - Standard user binary directory (if exists or can be created)
-4. `$HOME/.opencode/bin` - Default fallback
-
-```bash
-# Examples
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
-```
-
-### Agents
-
-OpenCode includes two built-in agents you can switch between with the `Tab` key.
+Logan AI includes built-in agents you can switch between with the `Tab` key.
 
 - **build** - Default, full access agent for development work
 - **plan** - Read-only agent for analysis and code exploration
@@ -81,35 +84,38 @@ OpenCode includes two built-in agents you can switch between with the `Tab` key.
   - Asks permission before running bash commands
   - Ideal for exploring unfamiliar codebases or planning changes
 
-Also, included is a **general** subagent for complex searches and multistep tasks.
+Also included is a **general** subagent for complex searches and multistep tasks.
 This is used internally and can be invoked using `@general` in messages.
-
-Learn more about [agents](https://opencode.ai/docs/agents).
-
-### Documentation
-
-For more info on how to configure OpenCode [**head over to our docs**](https://opencode.ai/docs).
-
-### Contributing
-
-If you're interested in contributing to OpenCode, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
-
-### Building on OpenCode
-
-If you are working on a project that's related to OpenCode and is using "opencode" as a part of its name; for example, "opencode-dashboard" or "opencode-mobile", please add a note to your README to clarify that it is not built by the OpenCode team and is not affiliated with us in any way.
-
-### FAQ
-
-#### How is this different from Claude Code?
-
-It's very similar to Claude Code in terms of capability. Here are the key differences:
-
-- 100% open source
-- Not coupled to any provider. Although we recommend the models we provide through [OpenCode Zen](https://opencode.ai/zen); OpenCode can be used with Claude, OpenAI, Google or even local models. As models evolve the gaps between them will close and pricing will drop so being provider-agnostic is important.
-- Out of the box LSP support
-- A focus on TUI. OpenCode is built by neovim users and the creators of [terminal.shop](https://terminal.shop); we are going to push the limits of what's possible in the terminal.
-- A client/server architecture. This for example can allow OpenCode to run on your computer, while you can drive it remotely from a mobile app. Meaning that the TUI frontend is just one of the possible clients.
 
 ---
 
-**Join our community** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+## Documentation
+
+For configuration and usage documentation, see the [docs folder](./packages/opencode/docs/).
+
+### System Prompt Customization
+
+Logan AI allows full customization of the coding agent's system prompt. See the 
+[System Prompt Architecture](./packages/opencode/docs/SYSTEM_PROMPT_ARCHITECTURE.md) guide.
+
+---
+
+## Credits & Attribution
+
+This project is based on **[OpenCode](https://github.com/anomalyco/opencode)**, an excellent 
+open-source AI coding agent. Full credit and gratitude to the original OpenCode team.
+
+**Modified and Rebranded by:**
+- **Yuval Avidani** — [yuv.ai](https://yuv.ai)
+
+Logan AI is released under the MIT License, maintaining the same open-source spirit as the 
+original OpenCode project.
+
+---
+
+## License
+
+MIT License — See [LICENSE](./LICENSE) for details.
+
+Original work: Copyright (c) 2025 OpenCode  
+Modifications: Copyright (c) 2025-2026 Yuval Avidani (YUV.AI)
