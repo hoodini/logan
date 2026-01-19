@@ -1,6 +1,7 @@
 import z from "zod"
 import { EOL } from "os"
 import { NamedError } from "@opencode-ai/util/error"
+import { TerminalImage } from "./terminal-image"
 
 export namespace UI {
   // Rainbow colors: Orange -> Yellow -> Pink -> Purple -> Cyan
@@ -14,7 +15,7 @@ export namespace UI {
     DIM: "\x1b[90m",
   }
 
-  // Phoenix ASCII art
+  // Phoenix ASCII art (fallback when image not supported)
   const PHOENIX = [
     `${C.ORANGE}      .${C.YELLOW}*${C.ORANGE}.       `,
     `${C.ORANGE}    ${C.YELLOW}.' ${C.PINK}*${C.YELLOW} '.    `,
@@ -25,7 +26,7 @@ export namespace UI {
     `${C.RESET}`,
   ]
 
-  // Colored LOGAN logo
+  // Colored LOGAN logo (fallback when image not supported)
   const LOGO_TEXT = [
     `${C.ORANGE}█     ${C.YELLOW}█▀▀█ ${C.PINK}█▀▀▀ ${C.PURPLE}█▀▀█ ${C.CYAN}█▀▀▄${C.RESET}`,
     `${C.ORANGE}█     ${C.YELLOW}█░░█ ${C.PINK}█░░█ ${C.PURPLE}█▀▀█ ${C.CYAN}█░░█${C.RESET}`,
@@ -69,6 +70,19 @@ export namespace UI {
   }
 
   export function logo(pad?: string) {
+    // Try to render the actual image first (works in iTerm2, Kitty, WezTerm, Sixel terminals)
+    const imageOutput = TerminalImage.renderLogo({ width: 60 })
+    if (imageOutput) {
+      const result = []
+      if (pad) result.push(pad)
+      result.push(imageOutput)
+      result.push(EOL + EOL)
+      result.push(C.DIM + "  Logan is your advanced AI code assistant." + C.RESET + EOL)
+      result.push(C.DIM + "  by Yuval Avidani, AI Builder & Speaker, YUV.AI" + C.RESET + EOL)
+      return result.join("").trimEnd()
+    }
+
+    // Fallback to ASCII art for unsupported terminals
     const result = []
     const maxRows = Math.max(LOGO_TEXT.length, PHOENIX.length)
     
