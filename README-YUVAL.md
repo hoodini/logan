@@ -1,16 +1,112 @@
-# OpenCode - הסוכן הקוד הפתוח שעובד עם כל מודל שתרצו 🚀
+# LOGAN - סוכן AI לקוד שעובד עם כל מודל שתרצו 🚀
 
 <p align="center">
-  <a href="https://opencode.ai">
-    <picture>
-      <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
-      <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo" width="300">
-    </picture>
-  </a>
+  <img src="cli-logo.png" alt="LOGAN logo" width="500">
 </p>
 
-> **TL;DR:** OpenCode הוא סוכן AI לכתיבת קוד שרץ בטרמינל - בדיוק כמו Claude Code, רק שהוא קוד פתוח לחלוטין ועובד עם כל ספק LLM שתרצו.
+> **TL;DR:** Logan הוא סוכן AI לכתיבת קוד שרץ בטרמינל - בדיוק כמו Claude Code, רק שהוא קוד פתוח לחלוטין ועובד עם כל ספק LLM שתרצו. מבוסס על OpenCode.
+
+---
+
+## 🏃 Quick Start - איך להריץ את Logan
+
+### אפשרות 1: Development Mode (לפיתוח)
+
+```bash
+# שלב 1: Clone the repo
+git clone https://github.com/hoodini/logan.git
+cd logan
+
+# שלב 2: Install dependencies (צריך Bun 1.3+)
+bun install
+
+# שלב 3: Run Logan!
+bun dev
+```
+
+**זהו! Logan רץ** 🎉
+
+### אפשרות 2: Build Standalone Binary (להפצה)
+
+```bash
+# Build for your current OS
+cd packages/opencode
+bun run script/build.ts --single
+
+# Run the built binary
+# Windows:
+.\dist\opencode-windows-x64\bin\opencode.exe
+
+# macOS (Apple Silicon):
+./dist/opencode-darwin-arm64/bin/opencode
+
+# macOS (Intel):
+./dist/opencode-darwin-x64/bin/opencode
+
+# Linux:
+./dist/opencode-linux-x64/bin/opencode
+```
+
+### אפשרות 3: Run from Any Directory
+
+```bash
+# Add to your PATH (one-time setup)
+# Windows PowerShell:
+$env:Path += ";C:\path\to\logan\packages\opencode\dist\opencode-windows-x64\bin"
+
+# macOS/Linux (add to ~/.bashrc or ~/.zshrc):
+export PATH="$PATH:/path/to/logan/packages/opencode/dist/opencode-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)/bin"
+
+# Now run from anywhere:
+logan
+```
+
+---
+
+## 🖥️ IDE Integration - שילוב עם סביבת הפיתוח
+
+### VS Code
+```bash
+# Run Logan in VS Code terminal
+# 1. Open terminal (Ctrl+`)
+# 2. Navigate to your project
+cd /path/to/your/project
+
+# 3. Run Logan
+bun dev  # if in logan repo
+# or
+logan    # if installed globally
+```
+
+### JetBrains IDEs (IntelliJ, WebStorm, PyCharm)
+```bash
+# Same as VS Code - open terminal and run
+logan
+```
+
+### Neovim / Vim
+```bash
+# Run in a terminal split or use :terminal
+:terminal logan
+```
+
+### Any Terminal
+Logan works in **any terminal** on **any OS**:
+- ✅ Windows: PowerShell, CMD, Windows Terminal, Git Bash
+- ✅ macOS: Terminal.app, iTerm2, Kitty, Warp, WezTerm
+- ✅ Linux: GNOME Terminal, Konsole, Alacritty, Kitty
+
+---
+
+## 🌍 Cross-Platform Support
+
+| Platform | Status | Terminal Image |
+|----------|--------|----------------|
+| **Windows x64** | ✅ Full Support | ASCII fallback |
+| **macOS Apple Silicon** | ✅ Full Support | ✅ iTerm2/Kitty |
+| **macOS Intel** | ✅ Full Support | ✅ iTerm2/Kitty |
+| **Linux x64** | ✅ Full Support | ✅ Sixel/Kitty |
+| **Linux ARM64** | ✅ Full Support | ✅ Sixel/Kitty |
 
 ---
 
@@ -18,7 +114,7 @@
 
 מסתבר שהרבה מפתחים מחפשים כלי AI לקידוד שלא יהיה תלוי בספק יחיד. הריפו הזה פותר בדיוק את הבעיה הזו.
 
-OpenCode is an open-source AI coding agent that runs directly in your terminal. Think of it as Claude Code or GitHub Copilot Chat, but with these key differences:
+Logan is an open-source AI coding agent that runs directly in your terminal. Think of it as Claude Code or GitHub Copilot Chat, but with these key differences:
 
 - **100% קוד פתוח** - תוכלו לקרוא כל שורת קוד
 - **לא תלוי בספק אחד** - עובד עם Claude, OpenAI, Google, מודלים לוקאליים, ועוד
@@ -27,11 +123,11 @@ OpenCode is an open-source AI coding agent that runs directly in your terminal. 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         OpenCode Architecture                        │
+│                          LOGAN Architecture                          │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │   ┌──────────┐     ┌──────────────┐     ┌──────────────────────┐   │
-│   │  אתם     │────▶│   OpenCode   │────▶│   LLM Provider       │   │
+│   │  אתם     │────▶│    LOGAN     │────▶│   LLM Provider       │   │
 │   │ (Terminal)│     │   (Agent)    │     │   (Your Choice!)     │   │
 │   └──────────┘     └──────────────┘     └──────────────────────┘   │
 │                           │                        │               │
@@ -71,28 +167,26 @@ OpenCode is an open-source AI coding agent that runs directly in your terminal. 
 
 ## 🚀 התקנה - 3 דקות ואתם באוויר
 
-### הדרך המהירה (YOLO Mode 😎):
+### הדרך המהירה - מ-Source:
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+# 1. Clone
+git clone https://github.com/hoodini/logan.git
+cd logan
+
+# 2. Install (requires Bun 1.3+)
+# Install Bun first if needed: https://bun.sh
+bun install
+
+# 3. Run!
+bun dev
 ```
 
-### או דרך Package Manager:
+### Build Standalone Executable:
 ```bash
-# npm/bun/pnpm/yarn
-npm i -g opencode-ai@latest
+cd packages/opencode
+bun run script/build.ts --single
 
-# Windows
-scoop install opencode
-choco install opencode
-
-# macOS / Linux
-brew install anomalyco/tap/opencode
-
-# Arch Linux
-paru -S opencode-bin
-
-# Nix
-nix run nixpkgs#opencode
+# Binary will be in dist/ folder
 ```
 
 ---
@@ -105,7 +199,7 @@ nix run nixpkgs#opencode
 
 ```bash
 # שלב 1: התחברות
-opencode auth login github-copilot
+logan auth login github-copilot
 
 # שלב 2: הגדרת המודל ב-opencode.json
 ```
@@ -133,7 +227,7 @@ opencode auth login github-copilot
 
 ```bash
 # שלב 1: הוספת API Key
-opencode auth add openai
+logan auth add openai
 # יבקש מכם להדביק את ה-API Key מ-platform.openai.com
 ```
 
@@ -156,7 +250,7 @@ export OPENAI_API_KEY="sk-..."
 
 ```bash
 # שלב 1: הוספת API Key
-opencode auth add anthropic
+logan auth add anthropic
 ```
 
 קובץ `opencode.json`:
@@ -279,7 +373,7 @@ export AWS_REGION="us-east-1"
 
 ```bash
 # פתחו טרמינל בתיקיית הפרויקט והריצו:
-opencode
+logan
 
 # זהו! עכשיו אתם יכולים לשאול שאלות על הקוד שלכם
 ```
@@ -301,7 +395,7 @@ opencode
 ```
 אתם: "יש לי באג בקובץ auth.ts - המשתמשים לא מצליחים להתחבר אחרי refresh token"
 
-OpenCode: *קורא את הקוד, מנתח את הבעיה*
+Logan: *קורא את הקוד, מנתח את הבעיה*
 "מצאתי את הבעיה! ב-auth.ts שורה 47, אתם מנסים לרענן את הטוקן אבל לא מחכים
 לתשובה מהשרת. הנה התיקון..."
 ```
@@ -310,7 +404,7 @@ OpenCode: *קורא את הקוד, מנתח את הבעיה*
 ```
 אתם: "תוסיף dark mode לאפליקציה"
 
-OpenCode: *סורק את הפרויקט*
+Logan: *סורק את הפרויקט*
 "אני רואה שאתם משתמשים ב-Tailwind CSS. אני אצור context לניהול הtheme,
 אוסיף toggle button, ואעדכן את ה-tailwind.config..."
 *יוצר/עורך קבצים אוטומטית*
@@ -320,7 +414,7 @@ OpenCode: *סורק את הפרויקט*
 ```
 אתם: "תסביר לי איך עובד ה-payment flow בפרויקט"
 
-OpenCode: *קורא את הקבצים הרלוונטיים*
+Logan: *קורא את הקבצים הרלוונטיים*
 "הפיימנט פלואו עובד ככה:
 1. המשתמש לוחץ על 'Pay' ב-checkout.tsx
 2. נשלחת קריאה ל-/api/payment שב-payment.ts
@@ -334,7 +428,7 @@ OpenCode: *קורא את הקבצים הרלוונטיים*
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                        OpenCode Workflow                          │
+│                          LOGAN Workflow                           │
 └──────────────────────────────────────────────────────────────────┘
 
      ┌─────────┐         ┌──────────┐         ┌──────────┐
@@ -380,7 +474,7 @@ export OPENCODE_DISABLE_SHARE=true
 
 ## 📚 Agents מובנים
 
-OpenCode מגיע עם שני סוכנים שאפשר לעבור ביניהם עם `Tab`:
+LOGAN מגיע עם שני סוכנים שאפשר לעבור ביניהם עם `Tab`:
 
 | Agent | תיאור | מתי להשתמש |
 |-------|--------|-----------|
@@ -391,7 +485,7 @@ OpenCode מגיע עם שני סוכנים שאפשר לעבור ביניהם ע
 
 ## 🆚 מה ההבדל מ-Claude Code?
 
-| פיצ'ר | Claude Code | OpenCode |
+| פיצ'ר | Claude Code | LOGAN |
 |--------|-------------|----------|
 | קוד פתוח | ❌ | ✅ 100% |
 | בחירת ספק LLM | ❌ (רק Claude) | ✅ כל ספק |
@@ -411,10 +505,9 @@ OpenCode מגיע עם שני סוכנים שאפשר לעבור ביניהם ע
 
 ## 📖 לינקים שימושיים
 
-- 🌐 [אתר רשמי](https://opencode.ai)
-- 📚 [דוקומנטציה](https://opencode.ai/docs)
-- 💬 [Discord](https://discord.gg/opencode)
-- 🐦 [X/Twitter](https://x.com/opencode)
+- 🔗 [LOGAN GitHub](https://github.com/hoodini/logan)
+- 📖 [Original OpenCode](https://opencode.ai)
+- 🎨 [Curated by YUV.AI](https://yuv.ai)
 
 ---
 
@@ -425,6 +518,7 @@ MIT - עשו מה שבא לכם!
 ---
 
 <p align="center">
+  <i>🐺 LOGAN - Your Personal AI Coding Agent</i><br>
   <i>Curated by Yuval Avidani, AI Builder & Speaker, YUV.AI</i><br>
   <i>GitHub Star | AWS GenAI Superstar</i>
 </p>
