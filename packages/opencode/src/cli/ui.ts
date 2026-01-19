@@ -3,11 +3,33 @@ import { EOL } from "os"
 import { NamedError } from "@opencode-ai/util/error"
 
 export namespace UI {
-  const LOGO = [
-    [`                    `, `             ▄     `],
-    [`█▀▀█ █▀▀█ █▀▀█ █▀▀▄ `, `█▀▀▀ █▀▀█ █▀▀█ █▀▀█`],
-    [`█░░█ █░░█ █▀▀▀ █░░█ `, `█░░░ █░░█ █░░█ █▀▀▀`],
-    [`▀▀▀▀ █▀▀▀ ▀▀▀▀ ▀  ▀ `, `▀▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀`],
+  // Rainbow colors: Orange -> Yellow -> Pink -> Purple -> Cyan
+  const C = {
+    ORANGE: "\x1b[38;5;208m",
+    YELLOW: "\x1b[38;5;220m",
+    PINK: "\x1b[38;5;205m",
+    PURPLE: "\x1b[38;5;135m",
+    CYAN: "\x1b[38;5;51m",
+    RESET: "\x1b[0m",
+    DIM: "\x1b[90m",
+  }
+
+  // Phoenix ASCII art
+  const PHOENIX = [
+    `${C.ORANGE}      .${C.YELLOW}*${C.ORANGE}.       `,
+    `${C.ORANGE}    ${C.YELLOW}.' ${C.PINK}*${C.YELLOW} '.    `,
+    `${C.YELLOW}   /  ${C.PINK}*${C.PURPLE}@${C.PINK}*  \\   `,
+    `${C.PINK}  : ${C.PURPLE}*${C.CYAN}o${C.PURPLE}@${C.CYAN}o${C.PURPLE}* :  `,
+    `${C.PURPLE}   \\ ${C.CYAN}'*'${C.PURPLE} /   `,
+    `${C.CYAN}    '._.'    `,
+    `${C.RESET}`,
+  ]
+
+  // Colored LOGAN logo
+  const LOGO_TEXT = [
+    `${C.ORANGE}█     ${C.YELLOW}█▀▀█ ${C.PINK}█▀▀▀ ${C.PURPLE}█▀▀█ ${C.CYAN}█▀▀▄${C.RESET}`,
+    `${C.ORANGE}█     ${C.YELLOW}█░░█ ${C.PINK}█░░█ ${C.PURPLE}█▀▀█ ${C.CYAN}█░░█${C.RESET}`,
+    `${C.ORANGE}█▄▄▄▄ ${C.YELLOW}▀▀▀▀ ${C.PINK}▀▀▀▀ ${C.PURPLE}▀░░▀ ${C.CYAN}▀░░▀${C.RESET}`,
   ]
 
   export const CancelledError = NamedError.create("UICancelledError", z.void())
@@ -48,14 +70,27 @@ export namespace UI {
 
   export function logo(pad?: string) {
     const result = []
-    for (const row of LOGO) {
+    const maxRows = Math.max(LOGO_TEXT.length, PHOENIX.length)
+    
+    for (let i = 0; i < maxRows; i++) {
       if (pad) result.push(pad)
-      result.push(Bun.color("gray", "ansi"))
-      result.push(row[0])
-      result.push("\x1b[0m")
-      result.push(row[1])
+      if (i < LOGO_TEXT.length) {
+        result.push(LOGO_TEXT[i])
+      } else {
+        result.push("                              ")
+      }
+      result.push("  ")
+      if (i < PHOENIX.length) {
+        result.push(PHOENIX[i])
+      }
       result.push(EOL)
     }
+    
+    // Add branding
+    result.push(EOL)
+    result.push(C.DIM + "  Logan is your advanced AI code assistant." + C.RESET + EOL)
+    result.push(C.DIM + "  by Yuval Avidani, AI Builder & Speaker, YUV.AI" + C.RESET + EOL)
+    
     return result.join("").trimEnd()
   }
 
