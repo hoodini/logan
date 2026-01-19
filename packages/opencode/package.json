@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "1.0.0",
-  "name": "logan-ai",
+  "name": "opencode",
   "description": "LOGAN - Your Personal AI Coding Agent. Open-source, multi-provider, runs in your terminal. By Yuval Avidani, YUV.AI",
   "type": "module",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "author": "Yuval Avidani <yuval@yuv.ai> (https://yuv.ai)",
   "homepage": "https://github.com/hoodini/logan",
   "repository": {
