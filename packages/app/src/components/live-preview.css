@@ -1,0 +1,52 @@
+/**
+ * Live Preview Styles
+ * Part of Logan AI by Yuval Avidani (YUV.AI)
+ */
+
+[data-component="live-preview"] {
+  --preview-header-height: 48px;
+  --preview-footer-height: 32px;
+}
+
+[data-component="live-preview"] iframe {
+  background-color: white;
+}
+
+/* Pulse animation for the live indicator */
+@keyframes live-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+[data-component="live-preview"] .animate-pulse {
+  animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Device frames */
+[data-component="live-preview"] .device-frame {
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* Smooth transition for viewport changes */
+[data-component="live-preview"] .viewport-container {
+  transition: all 0.3s ease-out;
+}
+
+/* Checkerboard background pattern */
+[data-component="live-preview"] .preview-bg {
+  background-image:
+    linear-gradient(45deg, #2a2a2a 25%, transparent 25%),
+    linear-gradient(-45deg, #2a2a2a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #2a2a2a 75%),
+    linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}

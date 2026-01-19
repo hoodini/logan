@@ -54,9 +54,9 @@ export default function Enterprise() {
 
   return (
     <main data-page="enterprise">
-      <Title>OpenCode | Enterprise solutions for your organisation</Title>
+      <Title>Logan AI | Enterprise solutions for your organisation</Title>
       <Link rel="canonical" href={`${config.baseUrl}/enterprise`} />
-      <Meta name="description" content="Contact OpenCode for enterprise solutions" />
+      <Meta name="description" content="Contact Logan AI for enterprise solutions" />
       <div data-component="container">
         <Header />
 

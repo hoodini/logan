@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <main data-page="zen">
       {/*<HttpHeader name="Cache-Control" value="public, max-age=1, s-maxage=3600, stale-while-revalidate=86400" />*/}
-      <Title>OpenCode Zen | A curated set of reliable optimized models for coding agents</Title>
+      <Title>Logan AI Zen | A curated set of reliable optimized models for coding agents</Title>
       <Link rel="canonical" href={`${config.baseUrl}/zen`} />
       <Meta property="og:image" content="/social-share-zen.png" />
       <Meta name="twitter:image" content="/social-share-zen.png" />

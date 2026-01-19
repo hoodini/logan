@@ -506,6 +506,67 @@ export namespace Provider {
     },
   }
 
+  // Auto-detect local LLM providers that don't require authentication
+  async function autoDetectLocalProviders(
+    config: Config.Info,
+    database: Record<string, Info>,
+    providers: Record<string, Info>,
+    mergeProvider: (providerID: string, provider: Partial<Info>) => void,
+  ) {
+    // Ollama detection
+    const ollamaConfig = config.provider?.["ollama"]
+    if (ollamaConfig || database["ollama"]) {
+      const baseURL = ollamaConfig?.api ?? "http://localhost:11434/v1"
+      const isAvailable = await (async () => {
+        try {
+          const ollamaApiUrl = baseURL.replace("/v1", "/api/tags")
+          const response = await fetch(ollamaApiUrl, {
+            signal: AbortSignal.timeout(2000),
+          })
+          return response.ok
+        } catch {
+          return false
+        }
+      })()
+      
+      if (isAvailable) {
+        mergeProvider("ollama", {
+          source: "config",
+          options: {
+            baseURL,
+            apiKey: "ollama", // Dummy key for SDK compatibility
+          },
+        })
+      }
+    }
+
+    // LM Studio detection (commonly runs on port 1234)
+    const lmstudioConfig = config.provider?.["lmstudio"]
+    if (lmstudioConfig || database["lmstudio"]) {
+      const baseURL = lmstudioConfig?.api ?? "http://localhost:1234/v1"
+      const isAvailable = await (async () => {
+        try {
+          const response = await fetch(`${baseURL}/models`, {
+            signal: AbortSignal.timeout(2000),
+          })
+          return response.ok
+        } catch {
+          return false
+        }
+      })()
+      
+      if (isAvailable) {
+        mergeProvider("lmstudio", {
+          source: "config",
+          options: {
+            baseURL,
+            apiKey: "lmstudio", // Dummy key for SDK compatibility
+          },
+        })
+      }
+    }
+  }
+
   export const Model = z
     .object({
       id: z.string(),
@@ -923,6 +984,9 @@ export namespace Provider {
       }
       mergeProvider(providerID, partial)
     }
+
+    // Auto-detect local LLM providers (Ollama, LM Studio, etc.)
+    await autoDetectLocalProviders(config, database, providers, mergeProvider)
 
     for (const [providerID, provider] of Object.entries(providers)) {
       if (!isProviderAllowed(providerID)) {

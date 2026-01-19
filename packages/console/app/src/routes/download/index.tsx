@@ -80,9 +80,9 @@ export default function Download() {
   }
   return (
     <main data-page="download">
-      <Title>OpenCode | Download</Title>
+      <Title>Logan AI | Download</Title>
       <Link rel="canonical" href={`${config.baseUrl}/download`} />
-      <Meta name="description" content="Download OpenCode for macOS, Windows, and Linux" />
+      <Meta name="description" content="Download Logan AI for macOS, Windows, and Linux" />
       <div data-component="container">
         <Header hideGetStarted />
 

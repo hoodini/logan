@@ -1,3 +1,10 @@
+/**
+ * Logan AI Logo Components
+ * 
+ * Part of Logan AI by Yuval Avidani (YUV.AI)
+ * A modified fork of OpenCode
+ */
+
 export const Mark = (props: { class?: string }) => {
   return (
     <svg
@@ -32,28 +39,45 @@ export const Logo = (props: { class?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 234 42"
+      viewBox="0 0 180 42"
       fill="none"
       classList={{ [props.class ?? ""]: !!props.class }}
+      data-component="logan-logo"
     >
       <g>
-        <path d="M18 30H6V18H18V30Z" fill="var(--icon-weak-base)" />
-        <path d="M18 12H6V30H18V12ZM24 36H0V6H24V36Z" fill="var(--icon-base)" />
-        <path d="M48 30H36V18H48V30Z" fill="var(--icon-weak-base)" />
-        <path d="M36 30H48V12H36V30ZM54 36H36V42H30V6H54V36Z" fill="var(--icon-base)" />
-        <path d="M84 24V30H66V24H84Z" fill="var(--icon-weak-base)" />
-        <path d="M84 24H66V30H84V36H60V6H84V24ZM66 18H78V12H66V18Z" fill="var(--icon-base)" />
-        <path d="M108 36H96V18H108V36Z" fill="var(--icon-weak-base)" />
-        <path d="M108 12H96V36H90V6H108V12ZM114 36H108V12H114V36Z" fill="var(--icon-base)" />
-        <path d="M144 30H126V18H144V30Z" fill="var(--icon-weak-base)" />
-        <path d="M144 12H126V30H144V36H120V6H144V12Z" fill="var(--icon-strong-base)" />
-        <path d="M168 30H156V18H168V30Z" fill="var(--icon-weak-base)" />
-        <path d="M168 12H156V30H168V12ZM174 36H150V6H174V36Z" fill="var(--icon-strong-base)" />
-        <path d="M198 30H186V18H198V30Z" fill="var(--icon-weak-base)" />
-        <path d="M198 12H186V30H198V12ZM204 36H180V6H198V0H204V36Z" fill="var(--icon-strong-base)" />
-        <path d="M234 24V30H216V24H234Z" fill="var(--icon-weak-base)" />
-        <path d="M216 12V18H228V12H216ZM234 24H216V30H234V36H210V6H234V24Z" fill="var(--icon-strong-base)" />
+        {/* L */}
+        <path d="M6 6V30H24V36H0V6H6Z" fill="var(--icon-strong-base)" />
+        {/* O */}
+        <path d="M48 30H30V18H48V30Z" fill="var(--icon-weak-base)" />
+        <path d="M48 12H30V30H48V12ZM54 36H24V6H54V36Z" fill="var(--icon-strong-base)" />
+        {/* G */}
+        <path d="M84 24V30H72V24H84Z" fill="var(--icon-weak-base)" />
+        <path d="M84 24H66V30H84V36H60V6H84V12H66V24H84Z" fill="var(--icon-strong-base)" />
+        {/* A */}
+        <path d="M108 30H96V24H108V30Z" fill="var(--icon-weak-base)" />
+        <path d="M108 12H96V30H90V6H108V12ZM114 36H108V12H114V36ZM114 24H96V18H114V24Z" fill="var(--icon-strong-base)" />
+        {/* N */}
+        <path d="M138 30H126V18H138V30Z" fill="var(--icon-weak-base)" />
+        <path d="M138 12H126V36H120V6H138V12ZM144 36H138V12H144V36Z" fill="var(--icon-strong-base)" />
+        {/* AI dot */}
+        <circle cx="165" cy="21" r="12" fill="var(--icon-interactive-base)" />
+        <text x="165" y="27" text-anchor="middle" font-size="14" font-weight="bold" fill="var(--text-inverse-base)">AI</text>
       </g>
     </svg>
   )
 }
+
+export const LoganBrand = (props: { class?: string; showSubtitle?: boolean }) => {
+  return (
+    <div classList={{ "flex flex-col items-center gap-1": true, [props.class ?? ""]: !!props.class }}>
+      <Logo class="h-8" />
+      <Show when={props.showSubtitle}>
+        <span class="text-10-regular text-text-weak">
+          by <a href="https://yuv.ai" target="_blank" rel="noopener noreferrer" class="text-text-interactive-base hover:underline">Yuval Avidani (YUV.AI)</a>
+        </span>
+      </Show>
+    </div>
+  )
+}
+
+import { Show } from "solid-js"

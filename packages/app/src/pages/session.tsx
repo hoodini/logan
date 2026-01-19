@@ -7,6 +7,7 @@ import { selectionFromLines, useFile, type SelectedLineRange } from "@/context/f
 import { createStore } from "solid-js/store"
 import { PromptInput } from "@/components/prompt-input"
 import { SessionContextUsage } from "@/components/session-context-usage"
+import { LivePreview } from "@/components/live-preview"
 import { IconButton } from "@opencode-ai/ui/icon-button"
 import { Button } from "@opencode-ai/ui/button"
 import { Icon } from "@opencode-ai/ui/icon"
@@ -314,6 +315,8 @@ export default function Page() {
     mobileTab: "session" as "session" | "review",
     newSessionWorktree: "main",
     promptHeight: 0,
+    previewEnabled: true, // Show preview by default - Logan AI feature
+    previewWidth: 500,
   })
 
   const renderedUserMessages = createMemo(() => {
@@ -366,6 +369,45 @@ export default function Page() {
     if (!hasReview()) return true
     return sync.data.session_diff[id] !== undefined
   })
+
+  // Live Preview: Extract web files (HTML, CSS, JS) from diffs for real-time preview
+  const previewFiles = createMemo(() => {
+    const result: Record<string, string> = {}
+    const diffList = diffs()
+    if (!diffList || !Array.isArray(diffList)) return result
+
+    for (const diff of diffList) {
+      if (!diff.file) continue
+      const lower = diff.file.toLowerCase()
+      // Include HTML, CSS, JS, TSX, JSX files for preview
+      if (
+        lower.endsWith(".html") ||
+        lower.endsWith(".htm") ||
+        lower.endsWith(".css") ||
+        lower.endsWith(".scss") ||
+        lower.endsWith(".js") ||
+        lower.endsWith(".jsx") ||
+        lower.endsWith(".ts") ||
+        lower.endsWith(".tsx")
+      ) {
+        // Use the "after" content which represents the current state
+        result[diff.file] = diff.after ?? ""
+      }
+    }
+    return result
+  })
+
+  // Check if there are any web files to preview
+  const hasPreviewFiles = createMemo(() => Object.keys(previewFiles()).length > 0)
+
+  // Auto-enable preview when web files are detected
+  createEffect(
+    on(hasPreviewFiles, (has, prev) => {
+      if (has && !prev && isDesktop()) {
+        setStore("previewEnabled", true)
+      }
+    }),
+  )
 
   const idle = { type: "idle" as const }
   let inputRef!: HTMLDivElement
@@ -449,6 +491,15 @@ export default function Page() {
       category: "View",
       keybind: "mod+shift+r",
       onSelect: () => view().reviewPanel.toggle(),
+    },
+    {
+      id: "preview.toggle",
+      title: "Toggle live preview",
+      description: "Show or hide the real-time preview panel",
+      category: "View",
+      keybind: "mod+shift+p",
+      slash: "preview",
+      onSelect: () => setStore("previewEnabled", (e) => !e),
     },
     {
       id: "terminal.new",
@@ -1682,6 +1733,27 @@ export default function Page() {
                 </Show>
               </DragOverlay>
             </DragDropProvider>
+          </div>
+        </Show>
+
+        {/* Live Preview Panel - Real-time preview of web apps being built */}
+        <Show when={isDesktop() && store.previewEnabled}>
+          <div
+            class="relative h-full border-l border-border-weak-base bg-background-base flex flex-col shrink-0"
+            style={{ width: `${store.previewWidth}px` }}
+          >
+            <ResizeHandle
+              direction="horizontal"
+              size={store.previewWidth}
+              min={300}
+              max={window.innerWidth * 0.5}
+              onResize={(width) => setStore("previewWidth", width)}
+            />
+            <LivePreview
+              files={previewFiles()}
+              onClose={() => setStore("previewEnabled", false)}
+              class="flex-1"
+            />
           </div>
         </Show>
       </div>

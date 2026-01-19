@@ -36,7 +36,7 @@ export default function Black() {
 
   return (
     <>
-      <Title>opencode</Title>
+      <Title>Logan AI</Title>
       <section data-slot="cta">
         <Switch>
           <Match when={!selected()}>

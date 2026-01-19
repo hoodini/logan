@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main data-page="opencode">
       {/*<HttpHeader name="Cache-Control" value="public, max-age=1, s-maxage=3600, stale-while-revalidate=86400" />*/}
-      <Title>OpenCode | The open source AI coding agent</Title>
+      <Title>Logan AI | Your Personal AI Coding Assistant</Title>
       <Link rel="canonical" href={config.baseUrl} />
       <Meta property="og:image" content="/social-share.png" />
       <Meta name="twitter:image" content="/social-share.png" />

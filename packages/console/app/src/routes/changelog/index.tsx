@@ -92,9 +92,9 @@ export default function Changelog() {
 
   return (
     <main data-page="changelog">
-      <Title>OpenCode | Changelog</Title>
+      <Title>Logan AI | Changelog</Title>
       <Link rel="canonical" href={`${config.baseUrl}/changelog`} />
-      <Meta name="description" content="OpenCode release notes and changelog" />
+      <Meta name="description" content="Logan AI release notes and changelog" />
 
       <div data-component="container">
         <Header hideGetStarted />

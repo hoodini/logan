@@ -53,9 +53,9 @@ export default function Brand() {
 
   return (
     <main data-page="enterprise">
-      <Title>OpenCode | Brand</Title>
+      <Title>Logan AI | Brand</Title>
       <Link rel="canonical" href={`${config.baseUrl}/brand`} />
-      <Meta name="description" content="OpenCode brand guidelines" />
+      <Meta name="description" content="Logan AI brand guidelines" />
       <div data-component="container">
         <Header />
 

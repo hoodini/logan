@@ -142,7 +142,7 @@ async function refreshAccessToken(refreshToken: string): Promise<TokenResponse> 
 const HTML_SUCCESS = `<!doctype html>
 <html>
   <head>
-    <title>OpenCode - Codex Authorization Successful</title>
+    <title>Logan AI - Codex Authorization Successful</title>
     <style>
       body {
         font-family:
@@ -184,7 +184,7 @@ const HTML_SUCCESS = `<!doctype html>
 const HTML_ERROR = (error: string) => `<!doctype html>
 <html>
   <head>
-    <title>OpenCode - Codex Authorization Failed</title>
+    <title>Logan AI - Codex Authorization Failed</title>
     <style>
       body {
         font-family:

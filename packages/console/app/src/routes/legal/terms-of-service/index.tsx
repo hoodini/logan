@@ -9,9 +9,9 @@ import { Legal } from "~/component/legal"
 export default function TermsOfService() {
   return (
     <main data-page="legal">
-      <Title>OpenCode | Terms of Service</Title>
+      <Title>Logan AI | Terms of Service</Title>
       <Link rel="canonical" href={`${config.baseUrl}/legal/terms-of-service`} />
-      <Meta name="description" content="OpenCode terms of service" />
+      <Meta name="description" content="Logan AI terms of service" />
       <div data-component="container">
         <Header />
 

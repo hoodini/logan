@@ -9,9 +9,9 @@ import { Legal } from "~/component/legal"
 export default function PrivacyPolicy() {
   return (
     <main data-page="legal">
-      <Title>OpenCode | Privacy Policy</Title>
+      <Title>Logan AI | Privacy Policy</Title>
       <Link rel="canonical" href={`${config.baseUrl}/legal/privacy-policy`} />
-      <Meta name="description" content="OpenCode privacy policy" />
+      <Meta name="description" content="Logan AI privacy policy" />
       <div data-component="container">
         <Header />
 

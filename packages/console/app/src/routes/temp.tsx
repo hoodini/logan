@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <main data-page="home">
-      <Title>opencode | AI coding agent built for the terminal</Title>
+      <Title>Logan AI | AI coding agent built for the terminal</Title>
 
       <div data-component="content">
         <section data-component="top">

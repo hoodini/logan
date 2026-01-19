@@ -172,6 +172,26 @@ export function SessionHeader() {
               {/*   <SessionMcpIndicator /> */}
               {/* </div> */}
               <div class="flex items-center gap-1">
+                {/* Live Preview Toggle - Logan AI feature */}
+                <TooltipKeybind
+                  class="hidden md:block shrink-0"
+                  title="Toggle live preview"
+                  keybind={command.keybind("preview.toggle")}
+                >
+                  <Button
+                    variant="ghost"
+                    class="group/preview-toggle size-6 p-0"
+                    onClick={() => command.trigger("preview.toggle")}
+                  >
+                    <div class="relative flex items-center justify-center size-4 [&>*]:absolute [&>*]:inset-0">
+                      <Icon
+                        name="eye"
+                        size="small"
+                        class="group-hover/preview-toggle:text-icon-interactive-base"
+                      />
+                    </div>
+                  </Button>
+                </TooltipKeybind>
                 <Show when={currentSession()?.summary?.files}>
                   <TooltipKeybind
                     class="hidden md:block shrink-0"
