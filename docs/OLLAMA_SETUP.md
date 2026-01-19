@@ -53,12 +53,29 @@ Create `opencode.json` in your project folder:
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "ollama": {
-      "api": "http://localhost:11434/v1"
+      "name": "Ollama",
+      "api": "http://localhost:11434/v1",
+      "npm": "@ai-sdk/openai-compatible",
+      "models": {
+        "qwen2.5-coder:7b": {
+          "name": "Qwen 2.5 Coder 7B",
+          "attachment": false,
+          "reasoning": false,
+          "tool_call": true,
+          "temperature": true,
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        }
+      }
     }
   },
   "model": "ollama/qwen2.5-coder:7b"
 }
 ```
+
+**Important:** You must define each model in the config with its capabilities!
 
 ### 5. Run LOGAN
 
@@ -90,16 +107,24 @@ logan --model ollama/gemma3
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "ollama": {
+      "name": "Ollama",
       "api": "http://localhost:11434/v1",
+      "npm": "@ai-sdk/openai-compatible",
       "models": {
         "qwen2.5-coder:7b": {
-          "name": "Qwen 2.5 Coder 7B"
+          "name": "Qwen 2.5 Coder 7B",
+          "tool_call": true,
+          "limit": { "context": 32768, "output": 8192 }
         },
-        "qwen2.5-coder:32b": {
-          "name": "Qwen 2.5 Coder 32B"
+        "gemma3:latest": {
+          "name": "Gemma 3",
+          "tool_call": true,
+          "limit": { "context": 8192, "output": 4096 }
         },
         "codellama:13b": {
-          "name": "Code Llama 13B"
+          "name": "Code Llama 13B",
+          "tool_call": false,
+          "limit": { "context": 16384, "output": 4096 }
         }
       }
     }
