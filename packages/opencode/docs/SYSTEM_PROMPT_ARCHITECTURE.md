@@ -1,18 +1,112 @@
 # System Prompt Architecture
 
-This document explains how OpenCode constructs and sends prompts to the coding agent (LLM), and how you can customize the system prompt for your needs.
+This document explains how to customize what instructions the AI coding agent receives, regardless of which LLM provider (Claude, GPT, Gemini, etc.) you use.
+
+---
+
+## TL;DR - The Easiest Way to Customize the System Prompt
+
+**Create an `AGENTS.md` file in your project root.** That's it!
+
+```markdown
+# My Project Rules
+
+- Always use TypeScript
+- Write tests for every new function
+- Follow existing code patterns
+- Be concise in explanations
+```
+
+This file is automatically included in every prompt sent to the AI, **regardless of which LLM provider you use**.
 
 ---
 
 ## Overview
 
-When a user sends a message in OpenCode, a multi-layered system prompt is constructed and sent to the LLM along with the user's message. This architecture allows for:
+When you send a message, OpenCode builds a "system prompt" - the instructions that tell the AI how to behave. Think of it like giving an employee their job description before they start working.
 
-- **Provider-specific prompts** - Different base prompts for Claude, GPT, Gemini, etc.
-- **Agent customization** - Each agent can have its own system prompt
-- **Environment context** - Working directory, platform info, and date
-- **Custom instructions** - User-defined rules via `AGENTS.md`, `CLAUDE.md`, or config
-- **Plugin transformations** - Plugins can modify the system prompt dynamically
+The system prompt is built from multiple sources (in order):
+
+1. **Base instructions** - Built-in rules for being a good coding assistant
+2. **Your custom rules** - From `AGENTS.md` or config files
+3. **Environment info** - What folder you're in, what OS you're using, etc.
+
+---
+
+## 🎯 How to Set a Universal System Prompt (Works with ALL Providers)
+
+There are 3 easy ways to customize the AI's behavior. **All of these work regardless of whether you use Claude, GPT, Gemini, or any other provider.**
+
+### Option 1: Create an AGENTS.md File (Recommended)
+
+Create a file called `AGENTS.md` in your project's root folder:
+
+```markdown
+# Instructions for the AI
+
+You are helping me build a React application.
+
+Rules:
+- Use functional components with hooks
+- Use Tailwind CSS for styling  
+- Always add TypeScript types
+- Write unit tests for new functions
+```
+
+**That's it!** OpenCode automatically finds this file and includes it in every prompt.
+
+### Option 2: Global Rules (Apply to ALL Projects)
+
+Create `~/.config/opencode/AGENTS.md` (Linux/Mac) or `%USERPROFILE%\.config\opencode\AGENTS.md` (Windows):
+
+```markdown
+# My Global Coding Rules
+
+- Be concise, don't over-explain
+- Prefer modern JavaScript/TypeScript patterns
+- Always handle errors properly
+```
+
+These rules apply to every project you work on.
+
+### Option 3: Config File (Most Control)
+
+Add to your `opencode.json`:
+
+```json
+{
+  "agent": {
+    "build": {
+      "prompt": "You are a senior developer. Always write clean, tested code. Focus on maintainability."
+    }
+  }
+}
+```
+
+Or point to a file:
+
+```json
+{
+  "agent": {
+    "build": {
+      "prompt": "{file:./my-instructions.txt}"
+    }
+  }
+}
+```
+
+---
+
+## Why This Works with All Providers
+
+When you set a custom `prompt` for an agent, OpenCode uses YOUR prompt instead of the default provider-specific one. Here's the logic:
+
+```
+If agent has custom prompt → Use custom prompt
+Else → Use provider-specific prompt (Claude/GPT/Gemini defaults)
+```
+
+So by setting your own prompt, you bypass all provider-specific behavior and get consistent instructions across all LLMs.
 
 ---
 
